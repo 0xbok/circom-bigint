@@ -1,9 +1,22 @@
 #!/bin/bash
 
-PHASE1=../../circuits/pot20_final.ptau
-BUILD_DIR=../../build/pubkeygen
-CIRCUIT_NAME=pubkeygen
+PHASE1=../../circuits/pot08_final.ptau
+BUILD_DIR=../../build/bigint
+CIRCUIT_NAME=bigint
 
+mkdir -p $BUILD_DIR
+echo "****COMPILING CIRCUIT****"
+start=`date +%s`
+circom "$CIRCUIT_NAME".circom --r1cs --wasm --sym --c --wat --output "$BUILD_DIR"
+end=`date +%s`
+echo "DONE ($((end-start))s)"
+
+echo "****GENERATING WITNESS FOR SAMPLE INPUT****"
+start=`date +%s`
+node "$BUILD_DIR"/"$CIRCUIT_NAME"_js/generate_witness.js "$BUILD_DIR"/"$CIRCUIT_NAME"_js/"$CIRCUIT_NAME".wasm input_bigint.json "$BUILD_DIR"/witness.wtns
+end=`date +%s`
+echo "DONE ($((end-start))s)"
+echo "mridul"
 if [ -f "$PHASE1" ]; then
     echo "Found Phase 1 ptau file"
 else
@@ -15,18 +28,6 @@ if [ ! -d "$BUILD_DIR" ]; then
     echo "No build directory found. Creating build directory..."
     mkdir -p "$BUILD_DIR"
 fi
-
-echo "****COMPILING CIRCUIT****"
-start=`date +%s`
-circom "$CIRCUIT_NAME".circom --r1cs --wasm --sym --c --wat --output "$BUILD_DIR"
-end=`date +%s`
-echo "DONE ($((end-start))s)"
-
-echo "****GENERATING WITNESS FOR SAMPLE INPUT****"
-start=`date +%s`
-node "$BUILD_DIR"/"$CIRCUIT_NAME"_js/generate_witness.js "$BUILD_DIR"/"$CIRCUIT_NAME"_js/"$CIRCUIT_NAME".wasm input_pubkeygen.json "$BUILD_DIR"/witness.wtns
-end=`date +%s`
-echo "DONE ($((end-start))s)"
 
 echo "****GENERATING ZKEY 0****"
 start=`date +%s`
