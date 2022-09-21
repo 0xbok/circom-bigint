@@ -19,6 +19,7 @@ $carry$ is a binary signal, 1 iff $(a+b) > 2^n$.
 #### Description
 Since $a$ and $b$ are assumed to be $n$-bit inputs, their addition can fit in $n$ bits, or in $n+1$ bits with the highest significant bit set to 1.
 
+#### Notes for developers
 $a$ and $b$ should be constrained to be $n$-bit wide by circuits inheriting this template.
 
 ### ModSub(n)
@@ -35,3 +36,9 @@ $borrow$ is a binary signal, 1 iff $a < b$.
 If $a \geq b$, subtraction in $\mod n$ is just $a-b$.
 
 Otherwise, it is $2^n+a-b$. Since $a<b$, the $borrow$ bit is set to 1.
+
+### ModSubThree(n)
+#### Specification
+Input signals: $a,b,c$, all $n$-bit size with $n+2 \leq 253$.
+
+Output signals: $out, borrow, b_plus_c$.
