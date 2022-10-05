@@ -1,0 +1,3 @@
+[submodule "Coda"]
+	path = Coda
+	url = git@github.com:Veridise/Coda.git
