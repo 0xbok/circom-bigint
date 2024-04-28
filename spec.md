@@ -35,7 +35,7 @@ $borrow$ is a binary signal, 1 iff $a < b$.
 #### Description
 If $a \geq b$, subtraction in $\mod n$ is just $a-b$.
 
-Otherwise, it is $2^n+a-b$. Since $a<b$, the $borrow$ bit is set to 1.
+Otherwise, it is $2^n+a-b$. Since $a < b$, the $borrow$ bit is set to 1.
 
 ### ModSubThree(n)
 #### Specification
